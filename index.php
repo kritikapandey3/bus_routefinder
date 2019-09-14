@@ -35,10 +35,10 @@
                          <form autocomplete="off" action="route_map.php" method="post" class="col-md-8 offset-md-3 formpart">
                             <h4>Search:</h4>
                             <div class="autocomplete">
-                              <input type="text" class="form-control" id="from" name="from" placeholder="Enter source">
+                              <input type="text" class="form-control" id="from" name="from" placeholder="Enter source" required>
                             </div>
                             <div class="autocomplete">
-                              <input type="text" class="form-control" id="to" name="to" placeholder="Enter destination">
+                              <input type="text" class="form-control" id="to" name="to" placeholder="Enter destination" required>
                             </div>
                               <button type="submit" class="btn btn-primary" onclick="return valid();">Get Started!</button>
                         </form>
@@ -55,7 +55,8 @@
         var to = document.getElementById('to').value;
         
         if(from=="" || to==""){
-            return false;   
+            alert("Enter places in both fields.")
+            return false;
         }else if(from==to){
              alert("Your starting point and destination are same.")
              return false;
@@ -63,6 +64,15 @@
             return true;
         }
     } 
+    $("input[type='text']").keydown(function(e) {
+        // Ensure that it is a number and stop the keypress
+        if((e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) {
+            event.preventDefault(); 
+        } else{
+            return true;
+        }
+        
+    });
     </script>
     <script>
     <?php

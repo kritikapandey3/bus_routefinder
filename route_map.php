@@ -1,5 +1,3 @@
-
-<!--  code -->
 <!DOCTYPE html>
 <html>
 <meta charset="UTF-8">
@@ -22,7 +20,50 @@
     include('includes/navigation.php');
     include('pages/service_action.php');
 ?>
-<div class="row" style="margin-top: 100px;padding:0 5px 0 20px;">
+<div class="container searchform col-md-6 offset-md-3">
+  <form autocomplete="off" action="route_map.php" method="post">
+  <div class="form-row align-items-center">
+    <div class="col-auto autocomplete">
+      <input type="text" class="form-control mb-2" id="inlineFormInput from" name="from" placeholder="Enter source" value="<?php echo $from_address; ?>">
+    </div>
+    <div class="col-auto autocomplete">
+        <input type="text" class="form-control mb-2" id="inlineFormInput to" name="to" placeholder="Enter destination" value="<?php echo $to_address ?>">
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-2 searchbtn" onclick="return valid();">Get Started!</button>
+    </div>
+  </div>
+</form>
+</div>
+
+<script>
+    function valid(){
+        var from = document.getElementById('inlineFormInput from').value;
+        var to = document.getElementById('inlineFormInput to').value;
+        
+        if(from=="" || to==""){
+            alert("Enter places in both fields.")
+            return false;   
+        }else if(from==to){
+             alert("Your starting point and destination are same.")
+             return false;
+        }else{
+            return true;
+        }
+    }
+    $("input[type='text']").keydown(function(e) {
+        // Ensure that it is a number and stop the keypress
+        if((e.keyCode >= 48 && e.keyCode <=57) || (e.keyCode >= 96 && e.keyCode <=105)) {
+            event.preventDefault();
+        } else{
+            return true;
+        }
+
+    });
+    </script>
+
+<div class="container-fluid">
+  <div class="row" style="margin-top: 100px;padding:0 5px 0 20px;">
     <div class="col-sm-7" id="map"></div>
     <div class="col-sm-5">
         <h5><?php echo $objective; ?></h5>
@@ -100,6 +141,8 @@
         </p>
     </div>
 </div>
+</div>
+         
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDJ5YrHe6GorQ8BVPtT_gsmTM6ElhZwEHY"></script>
 <script>
@@ -168,3 +211,18 @@ google.maps.event.addDomListener(window, "load", initialize);
 ?>
 </body>
 </html>
+<script>
+    <?php
+        include($_SERVER['DOCUMENT_ROOT'].'/bus_routefinder/admin/includes/connection1.php');
+        $q = "select * from nodes";
+        $run_q = mysqli_query($con, $q);
+        $row=mysqli_fetch_all($run_q);
+        foreach ($row as $result)
+        {
+            $nodes[] = $result[1];
+        }
+        echo "var jsony =".json_encode($nodes).";\n";
+        ?>
+    autocomplete(document.getElementById("inlineFormInput from"),jsony);
+    autocomplete(document.getElementById("inlineFormInput to"),jsony);
+</script>

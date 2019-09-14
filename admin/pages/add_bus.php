@@ -41,7 +41,8 @@ if(isset($_POST['addBus'])) {
 	$run_q = mysqli_query($con, $q);
 	if(!mysqli_num_rows($run_q)) {
 		$q = "insert into bus (bus_name) values ('$bus_name')";
-		$run_q = mysqli_query($con, $q);
+        $run_q = mysqli_query($con, $q);
+        header('Location:all_bus_list.php?msg=Record successfully inserted.');
 	}
 }
 ?>

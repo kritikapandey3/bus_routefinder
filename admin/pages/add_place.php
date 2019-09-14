@@ -20,13 +20,20 @@
 
 			<div class="form-box">
     			<input type = "text" name = "node_address" placeholder="address"/>
-    			<input type = "text" name = "node_latitude" placeholder="latitude"/>
-    			<input type = "text" name = "node_longitude" placeholder="longitude"/>
+    			<input type = "text" class="latLong" name = "node_latitude" placeholder="latitude"/>
+    			<input type = "text" class="latLong" name = "node_longitude" placeholder="longitude"/>
     			<input type="submit" name="addNode" value="Submit Form"/>								
 			</div>
        </form>					
 </div>
 <script>
+$(".latLong").focusout(function () {
+    var lngVal = /^-?((1?[0-7]?|[0-9]?)[0-9]|180)\.[0-9]{1,6}$/;
+    if (!lngVal.test(this.value)) {
+		this.value = "";
+		return false;
+    }
+});
 window.onload = function(){
     document.querySelector(".active").classList.remove("active");
     var x = document.getElementsByClassName("sidebar");
@@ -46,6 +53,7 @@ if(isset($_POST['addNode'])) {
 	if(!mysqli_num_rows($run_q)) {
 		$q = "insert into nodes (address,latitude,longitude) values ('$address','$latitude','$longitude')";
 		$run_q = mysqli_query($con, $q);
+		header('Location:all_places_list.php?msg=Record successfully inserted.');
 	}
 }
 ?>

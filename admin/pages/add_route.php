@@ -11,7 +11,7 @@
     include($_SERVER['DOCUMENT_ROOT'].'/bus_routefinder/admin/includes/admin_navigation.php');
 ?>    
  <div class="col-sm-12 col-md-8 working" style="overflow: hidden;">
-    	<form autocomplete="off" action="" method="post">
+    	<form action="route_added.php" method="post">
 			<div class="bg-image"></div>
 			<div class="bg-grad"></div>
 			<div class="header">
@@ -24,8 +24,20 @@
                 </div>
                 <div class="autocomplete" style="width:250px;">
                 	<input type="text" name ="to_node" placeholder="to" id="to">
-                </div>			
-				<input type = "text" name = "distance" placeholder="distance">
+                </div>	
+				<select name="bus[]" class="form-control" style="width:250px;margin:10px 0 10px 0;" multiple>
+				<?php
+				include($_SERVER['DOCUMENT_ROOT'].'/bus_routefinder/admin/includes/connection1.php');
+				$q2 = "select * from bus";
+				$run_q2 = mysqli_query($con, $q2);
+				$row_q2 = mysqli_fetch_array($run_q2);
+				while($r=mysqli_fetch_array($run_q2)){
+				?><option value='<?php echo $r['bus_id'] ?>'><?php echo $r['bus_name'] ?></option>
+				<?php	
+				} 
+				?>
+				</select>		
+				<input type = "text" name = "distance" id="txtboxToFilter" placeholder="distance">
 				<input type="submit" name="addEdge" value="Submit Form"/>							
 			</div>
        </form>					
@@ -38,53 +50,32 @@ window.onload = function(){
 }
 </script>
 <script>
+$("#txtboxToFilter").keydown(function(event) {
+	// Allow only backspace and delete
+	if ( event.keyCode == 46 || event.keyCode == 8) {
+		// let it happen, don't do anything
+	}
+	else {
+		// Ensure that it is a number and stop the keypress
+		if (event.keyCode < 48 || event.keyCode > 57 ) {
+			event.preventDefault(); 
+		}   
+	}
+});
 <?php
     include($_SERVER['DOCUMENT_ROOT'].'/bus_routefinder/admin/includes/connection1.php');
-    $q = "select * from nodes";
-    $run_q = mysqli_query($con, $q);
-    $row=mysqli_fetch_all($run_q);
-    foreach ($row as $result)
+    $q1 = "select * from nodes";
+    $run_q1 = mysqli_query($con, $q1);
+    $row1=mysqli_fetch_all($run_q1);
+    foreach ($row1 as $result1)
     {
-        $nodes[] = $result[1];
+        $nodes[] = $result1[1];
     }
     echo "var jsony =".json_encode($nodes).";\n";
     ?>
     autocomplete(document.getElementById("from"),jsony);
     autocomplete(document.getElementById("to"),jsony);
 </script>
-<?php
-if(isset($_POST['addEdge'])) {
-
-    include($_SERVER['DOCUMENT_ROOT'].'/bus_routefinder/admin/includes/connection1.php');
-	
-	$from = $_POST['from_node'];
-	$to = $_POST['to_node'];
-	$dist = $_POST['distance'];    
-
-	$q = "select * from nodes where address = '$from'";
-	$run_q = mysqli_query($con, $q);
-	$row_q = mysqli_fetch_array($run_q);
-	$f = $row_q['node_id'];
-
-	$q = "select * from nodes where address = '$to'";
-	$run_q = mysqli_query($con, $q);
-	$row_q = mysqli_fetch_array($run_q);
-	$t = $row_q['node_id'];
-
-	$q = "select * from edges where edges.from = '$f' and edges.to = '$t'";
-	$run_q = mysqli_query($con, $q);
-	if(!mysqli_num_rows($run_q)) {
-		$qq = "SELECT max(edge_id)+1 'id' FROM edges";
-		$run_q = mysqli_query($con, $qq);
-		$row_q = mysqli_fetch_array($run_q);
-		$tt = $row_q['id'];
-
-		$q = "insert into edges (edge_id, edges.from, edges.to, distance) values ($tt, '$f','$t', '$dist')";
-		$run_q = mysqli_query($con, $q);
-	
-	}
-}
-?>
 
 </body>
 </html>

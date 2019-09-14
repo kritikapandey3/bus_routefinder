@@ -17,7 +17,6 @@ while($row_g = mysqli_fetch_array($run_g)) {
     $_distArr[$from][$to] = $dist;
 }
 
-
 $a = $_POST['from'];
 $b = $_POST['to'];
 $from_address = $a;
@@ -94,7 +93,6 @@ $path_lat_long[] = array("name"=>$from,"lat"=>$from_lat,"lng"=>$from_long);
 $path = array_reverse($path);
 $path_name = array_reverse($path_name);
 $path_lat_long = array_reverse($path_lat_long);
-//print result
 
 $from_name = $from;
 $to_name = $to;
@@ -131,7 +129,6 @@ foreach(array_keys($edge_list) as $key){
         while($row_q =  mysqli_fetch_array($run_q)){
             $bus_list[$key][$val][] = $row_q['bus_id'];
         }
-
     }
 }
 
@@ -142,7 +139,6 @@ function bus_route($bus_list,$starting_from,$starting_to,$ending_from,$ending_to
         $start_bus = $bus_list[$starting_from][$starting_to][$i];
         $common = false;
         $temp_bus_list = $bus_list;
-
 
         foreach(array_keys($temp_bus_list) as $key){
             $common=false;
@@ -182,13 +178,11 @@ function bus_route($bus_list,$starting_from,$starting_to,$ending_from,$ending_to
         $start_bus_name = $row_q['bus_name'];
 
         if($common==true){
-            //echo 'From '.$starting_from_name.' to '.$ending_to_name.' you can take '.$start_bus_name."<br/>";
             $GLOBALS['path_option'][$GLOBALS['first']][$second] = 'From '.$starting_from_name.' to '.$ending_to_name.' you can take '.$start_bus_name."<br/>";
             if(count($temp_bus_list)==0) {
                 $GLOBALS['first']++;
             }
         }else{
-            //echo 'From '.$starting_from_name.' to '.$ending_to_name.' you can take '.$start_bus_name."<br/>";
             $GLOBALS['path_option'][$GLOBALS['first']][$second] = 'From '.$starting_from_name.' to '.$ending_to_name.' you can take '.$start_bus_name."<br/>";
             if(count($temp_bus_list)>0) {
                 bus_route($temp_bus_list,$temp_starting_from,$temp_starting_to,$temp_ending_from,$temp_ending_to,$second+1);
@@ -242,7 +236,6 @@ if(count($bus_list)!=0){
     }
 
 }
-
 
 $q = "select * from bus";
 $run_q = mysqli_query($con, $q);

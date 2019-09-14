@@ -1,129 +1,19 @@
-/* .upper-ban{
-    background-color: #FF8040;
+
+.searchform
+{
+  margin-top: 100px;
+  margin-bottom: -80px;
 }
-.upper-ban ul li a{
-    color: white !important;
-    font-weight: bold;
+.searchform .form-control
+{
+  border: 1px solid #F94100;
+  border-radius: 0px;
+}
+.searchform .searchbtn
+{
+  border-radius: 0px;
 }
 
-.navbar-brand{
-    font-weight: bold;
-    padding:0 !important;
-    margin-right:5px !important;
-}
-.logo{
-    color: white;
-}
-
-.image-ban{
-    background-image: url("../images/bus14.jpg"); 
-    background-repeat: no-repeat;
-    background-size: cover ;
-    width:auto;  
-    height:500px;
-    padding:15px;
-}
-
-.image-ban h1{
-    color: white;
-    position: absolute;
-    top:140px;right:40px;
-    padding-left:20px;
-}
-.image-ban .search{
-    color: white;
-    position: relative;
-    top:240px; right:0;
-    padding-left:20px;
-    float:right;
-}
-.image-ban .search h4{
-    float: right;
-    margin-right:30px;
-}
-
-.image-ban .search form input{
-    margin-top:15px;
-}
-
-.image-ban .search form button{
-    margin-top:15px;
-}
-
-.login-form{
-    position: absolute;
-    top:120px;
-    color: black;
-    background: white;
-    border-radius: 8px;
-    margin: 0 auto;
-    padding-top:20px;
-    padding-bottom:20px;
-}
-.login-form h2{
-    text-align:center;
-}
-.login-form form {
-    text-align:center;
-}
-.login-form form label{
-    float:left;
-}
-.mid-ban{
-    float:left;
-    background-color: #EBEBEB50;
-    margin-bottom: 30px;
-    margin-left: 20px !important;
-}
-
-@media (max-width: 576px){
-    .seperator{
-        display: none;
-    }
-}
-
-.foot-ban{
-    background-color: #FF5B0D;
-    padding:10px 0 10px 0;
-}
-.foot-ban h6{
-    color:white;
-    padding-top:5px;
-}
-
-
-
-.autocomplete {
-  position: relative;
-}
-
-.autocomplete-items {
-  color:black;
-  position: absolute;
-  border: 1px solid #d4d4d4;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99; */
-  /*position the autocomplete items to be the same width as the container:*/
-  /* top: 100%;
-  left: 0;
-  right: 0;
-}
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
-}
-.autocomplete-items div:hover { */
-  /*when hovering an item:*/
-  /* background-color: #e9e9e9; 
-}
-.autocomplete-active { */
-  /*when navigating through the items using the arrow keys:*/
-  /* background-color: DodgerBlue !important; 
-  color: #ffffff; 
-} */
 @import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
 .upper-ban{
     background-color: rgba(255,255,255,0.9);
